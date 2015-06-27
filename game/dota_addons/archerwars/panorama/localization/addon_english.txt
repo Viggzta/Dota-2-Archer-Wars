@@ -1,0 +1,41 @@
+"addon"
+{
+	"addon_game_name"								"Archer Wars"
+	"PointsToWin"									"+{d:points_to_win} more"
+	"PointsToWin_CloseToVictory"					"+{d:points_to_win} more"
+	"PointsToWin_VeryCloseToVictory"				"+{d:points_to_win} more!"
+	"PointsToWin_Victory"							"Victory!"
+
+	"InstructionsTitle"								"ARCHER WARS"
+	"InstructionsObjective"							"OBJECTIVE"
+	"InstructionsObjectiveText"						"Slay your enemies! Be the first to earn the goal number of kills, and you will be victorious."
+	"InstructionsHowToPlay"							"HOW TO PLAY"
+	"InstructionsLines"								"-Slay anyone who isn't on your team.<br>
+													-Experience is gained passively for archers which are behind the highest level archer."
+
+	"Unassigned"      								"Unassigned Team"
+	"Spectator"       								"Spectator Team"
+	"Neutrals"        								"Neutral Team"
+	"NoTeam"          								"No Team"
+
+	"DOTA_GoodGuys"   								"Blue"
+	"DOTA_BadGuys"    								"Pink"
+	"DOTA_Custom1"    								"Teal"
+	"DOTA_Custom2"    								"Purple"
+	"DOTA_Custom3"    								"Yellow"
+	"DOTA_Custom4"    								"Orange"
+	"DOTA_Custom5"    								"Green"
+	"DOTA_Custom6"    								"Light Blue"
+	"DOTA_Custom7"    								"Dark Green"
+	"DOTA_Custom8"    								"Brown"
+	
+	"addonname"										"Archer Wars"
+	"archer_wars_game_info_header_objective"		"Objective:"
+	"archer_wars_brief_description"					"Slay your enemies! First team to hit the kill limit wins!"
+	"archer_wars_game_info_header_how_to_play"		"How To Play:"
+	"archer_wars_game_info_objective"				"Track down the enemy and kill them with your arrows."
+	"archer_wars_game_info_experience"				"The archers which are having lower level than the highest level archer gets a passive experience gain."
+	"archer_wars_game_info_tips_header"				"Tips:"
+	"archer_wars_game_info_tip01"					"Everything that can kill you is dodgeable with movement. Don't stop running."
+	"archer_wars_game_info_tip02"					"Don't be afraid to spend your mana, it regenerates very fast."
+}

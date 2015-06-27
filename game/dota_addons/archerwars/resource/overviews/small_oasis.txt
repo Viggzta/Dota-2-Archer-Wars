@@ -1,0 +1,8 @@
+small_oasis
+{
+	material materials/overviews/small_oasis.vmat
+	pos_x -3444
+	pos_y 3444
+	scale 6.727
+}
+

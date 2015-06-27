@@ -1,0 +1,7 @@
+<root>
+	<Panel class="OverthrowLoadingRoot">
+		<Panel id="seq" >
+			<Image src="file://{images}/custom_game/archer_wars_background_01.png" scaling="stretch-to-fit-preserve-aspect" />
+		</Panel>
+	</Panel>
+</root>
