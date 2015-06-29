@@ -2,6 +2,7 @@
 ProjectileHolder = {}
 BeamStacks = {0,0,0,0,0,0,0,0,0,0}
 MultishotStacks = {0,0,0,0,0,0,0,0,0,0}
+TimerCount = 0
  
 -- Constants
 MODIFIER_DUR = {15.0, 3.0, 5.0}
@@ -11,37 +12,51 @@ MODIFIER_NAMES = {"modifier_burn", "modifier_slow", "modifier_armor"}
  
 function normalArrow( args )
         local caster = args.caster
- 
-        local info =
-        {
-                Ability = args.ability,
+
+        local projectileData = {
+                modifiersList = {},
+                modifiersNumber = {},
+                fDamageMultiplier = 0.70,
+        }
+        local projectile = {
+                --EffectName = "particles/test_particle/ranged_tower_good.vpcf",
                 EffectName = "particles/arrow/archer_normal_arrow.vpcf",
-                iMoveSpeed = args.MoveSpeed,
-                vSpawnOrigin = caster:GetAbsOrigin(),
+                --vSpawnOrigin = hero:GetAbsOrigin(),
+                vSpawnOrigin = caster:GetAbsOrigin() + Vector(0,0,80),    --{unit=hero, attach="attach_attack1", offset=Vector(0,0,0)},
                 fDistance = args.FixedDistance,
                 fStartRadius = args.StartRadius,
                 fEndRadius = args.EndRadius,
                 Source = args.caster,
-                bHasFrontalCone = false,
-                bReplaceExisting = false,
-                iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
-                iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NO_INVIS,
-                iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-                fExpireTime = GameRules:GetGameTime() + 10.0,
-                bDeleteOnHit = true,
-                vVelocity = caster:GetForwardVector() * args.MoveSpeed,
-                modifiersList = {},
-                modifiersNumber = {},
-                fDamageMultiplier = 1.0
+                fExpireTime = 10.0,
+                vVelocity = caster:GetForwardVector() * args.MoveSpeed, -- RandomVector(1000),
+                UnitBehavior = PROJECTILES_NOTHING,
+                bMultipleHits = false,
+                bIgnoreSource = true,
+                TreeBehavior = PROJECTILES_NOTHING,
+                bCutTrees = false,
+                WallBehavior = PROJECTILES_NOTHING,
+                GroundBehavior = PROJECTILES_NOTHING,
+                fGroundOffset = 80,
+                nChangeMax = 10,
+                bRecreateOnChange = true,
+                bZCheck = false,
+                bGroundLock = true,
+                draw = false,--          draw = {alpha=1, color=Vector(200,0,0)},
+                --iPositionCP = 0,
+                --iVelocityCP = 1,
+                --ControlPoints = {[5]=Vector(100,0,0), [10]=Vector(0,0,1)},
+                --fRehitDelay = .3,
+                --fChangeDelay = 1,
+                --fRadiusStep = 10,
+                --bUseFindUnitsInRadius = false,
+
+                UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
+                OnUnitHit = function(self, unit) arrowHit( args, unit, projectileData ) end,
+                --OnTreeHit = function(self, tree) ... end,
+                --OnWallHit = function(self, gnvPos) ... end,
+                --OnGroundHit = function(self, groundPos) ... end,
+                --OnFinish = function(self, pos) ... end,
         }
- 
-        if (caster:HasModifier("modifier_aiming")) then
-                local ability = caster:FindAbilityByName("archer_take_aim")
-                local level = ability:GetLevel()
-                info.vVelocity = info.vVelocity + caster:GetForwardVector() * (level * 500)
-                info.fDistance = info.fDistance + (level * 500)
-        end
- 
         local PROC_CHANCE = {18, 15, 15}
         local particleString = ""
         local randomProc = 0
@@ -51,58 +66,111 @@ function normalArrow( args )
                 randomProc = RandomInt(0, 100)
                 if caster:HasItemInInventory(CUSTOM_ARROWS_ITEM[i]) and randomProc <= PROC_CHANCE[i] then
                         particleString = particleString .. CUSTOM_ARROWS[i] .. "_"
-                        table.insert(info.modifiersList, MODIFIER_NAMES[i])
-                        table.insert(info.modifiersNumber, i)
+                        table.insert(projectileData.modifiersList, MODIFIER_NAMES[i])
+                        table.insert(projectileData.modifiersNumber, i)
                         -- Lightning Arrow
                         if CUSTOM_ARROWS_ITEM[i] == "item_lightning_arrows" then
-                                info.vVelocity = info.vVelocity * 1.25
+                                projectile.vVelocity = projectile.vVelocity * 1.25
                         end
                 end
         end
         -- Arrow Particles
         if particleString ~= "" then
-                info.EffectName = "particles/arrow/archer_" .. particleString .."arrow.vpcf"
+                projectile.EffectName = "particles/arrow/archer_" .. particleString .."arrow.vpcf"
         end
  
         -- Dual Arrow
+        local projectile2Data = {
+                modifiersList = {},
+                modifiersNumber = {},
+                fDamageMultiplier = 0.70,
+        }
+        local projectile2 = {
+                --EffectName = "particles/test_particle/ranged_tower_good.vpcf",
+                EffectName = "particles/arrow/archer_normal_arrow.vpcf",
+                --vSpawnOrigin = hero:GetAbsOrigin(),
+                vSpawnOrigin = caster:GetAbsOrigin() + Vector(0,0,80),    --{unit=hero, attach="attach_attack1", offset=Vector(0,0,0)},
+                fDistance = args.FixedDistance,
+                fStartRadius = args.StartRadius,
+                fEndRadius = args.EndRadius,
+                Source = args.caster,
+                fExpireTime = 10.0,
+                vVelocity = caster:GetForwardVector() * args.MoveSpeed, -- RandomVector(1000),
+                UnitBehavior = PROJECTILES_NOTHING,
+                bMultipleHits = false,
+                bIgnoreSource = true,
+                TreeBehavior = PROJECTILES_NOTHING,
+                bCutTrees = false,
+                WallBehavior = PROJECTILES_NOTHING,
+                GroundBehavior = PROJECTILES_NOTHING,
+                fGroundOffset = 80,
+                nChangeMax = 10,
+                bRecreateOnChange = true,
+                bZCheck = false,
+                bGroundLock = true,
+                draw = false,--          draw = {alpha=1, color=Vector(200,0,0)},
+                --iPositionCP = 0,
+                --iVelocityCP = 1,
+                --ControlPoints = {[5]=Vector(100,0,0), [10]=Vector(0,0,1)},
+                --fRehitDelay = .3,
+                --fChangeDelay = 1,
+                --fRadiusStep = 10,
+                --bUseFindUnitsInRadius = false,
+
+                UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
+                OnUnitHit = function(self, unit) arrowHit( args, unit, projectile2Data) end,
+                --OnTreeHit = function(self, tree) ... end,
+                --OnWallHit = function(self, gnvPos) ... end,
+                --OnGroundHit = function(self, groundPos) ... end,
+                --OnFinish = function(self, pos) ... end,
+        }
         if caster:HasItemInInventory("item_dual_arrows") then
                 MultishotStacks[caster:GetMainControllingPlayer() +1] = MultishotStacks[caster:GetMainControllingPlayer() +1] +1
                 if MultishotStacks[caster:GetMainControllingPlayer() +1] >= 4 then
                         MultishotStacks[caster:GetMainControllingPlayer() +1] = MultishotStacks[caster:GetMainControllingPlayer() +1] -4
                         Timers:CreateTimer('Multishot Delay', {
                                                 useGameTime = false,
-                                                endTime = 0.2,
+                                                endTime = 0.3,
                                                 callback = function()
-                                                EmitSoundOn("Hero_Windrunner.PowershotDamage", caster)
+                                                EmitSoundOn("Ability.Powershot", caster)
                                                 -- Create Dual Arrow
-                                                local info2 = info
-                                                info2.fDamageMultiplier = 0.75
-                                                local projectileID2 = ProjectileManager:CreateLinearProjectile(info2)
-                                                addToProjectileHolder(info2, projectileID2)
+                                                local createdProjectile2 = Projectiles:CreateProjectile(projectile2)
+                                                -- Sniper Speed Increase
+                                                if caster:GetName() == "npc_dota_hero_mirana" then
+                                                        projectileSpeedIncrease(createdProjectile2, 0.5, 8, 1.5)
+                                                end
                                                 end    
                                         })
                 end
         end
- 
+
+        EmitSoundOn("Ability.Powershot", caster)
         -- Create Arrow
-        local projectileID = ProjectileManager:CreateLinearProjectile(info)
-        addToProjectileHolder(info, projectileID)
+        local createdProjectile = Projectiles:CreateProjectile(projectile)
+        -- Sniper Speed Increase
+        if caster:GetName() == "npc_dota_hero_mirana" then
+                projectileSpeedIncrease(createdProjectile, 0.5, 8, 1.5)
+        end
+        
         updateArrowStacks(caster)
 end
  
-function arrowHit( args )
+function arrowHit( args, target, projectileData )
         local caster = args.caster
-        local target = args.target
-        local distance = 0
-        local projectileID = 0
-        projectileID,distance = findClosestInProjectileHolder(args.target_points[1])
-        local totalDamage = math.floor((args.Damage + getArrowDamageIncrease(caster)) * ProjectileHolder[getProjectileHolderID(projectileID)].info.fDamageMultiplier)	-- Also adds bonus damage from [Arrow Damage]
- 
+        local totalDamage = math.floor((args.Damage + getArrowDamageIncrease(caster)) * projectileData.fDamageMultiplier)	-- Also adds bonus damage from [Arrow Damage]
+
+        if target:IsInvisible() then
+                if not caster:CanEntityBeSeenByMyTeam(target) then
+                        return
+                end
+        end
+        
+        EmitSoundOn("Hero_Windrunner.PowershotDamage", target)
         local damageTable = {
-        	       victim = target,
-		      attacker = caster,
-		      damage = totalDamage,
-		      damage_type = DAMAGE_TYPE_PHYSICAL,
+                victim = target,
+                attacker = caster,
+                damage = totalDamage,
+		damage_type = DAMAGE_TYPE_PHYSICAL,
 		}
         local randomProc = RandomInt(0, 100)
         -- Critical Arrow (MM Luck)
@@ -152,14 +220,28 @@ function arrowHit( args )
         end
  
         -- Elemental Arrow Debuffs
-        if ProjectileHolder[getProjectileHolderID(projectileID)].info.modifiersList ~= nil then
-                local modList = ProjectileHolder[getProjectileHolderID(projectileID)].info.modifiersList
-                local modNumber = ProjectileHolder[getProjectileHolderID(projectileID)].info.modifiersNumber
+        if projectileData.modifiersList ~= nil then
+                local modList = projectileData.modifiersList
+                local modNumber = projectileData.modifiersNumber
                 for j, v in pairs(modList) do
                         giveUnitDataDrivenModifier(caster, target, modList[j], MODIFIER_DUR[modNumber[j]])
                 end
         end
         updateArrowStacks(caster)
+end
+
+-- Used for snipers arrows
+function projectileSpeedIncrease(projectile, timeInterval, intervalCount, speedAmplification)
+        for times=1, intervalCount do
+        Timers:CreateTimer(TimerCount .. 'Speed Increase' .. times, {
+                useGameTime = false,
+                endTime = timeInterval*times,
+                callback = function()
+                        projectile:SetVelocity(projectile:GetVelocity() * speedAmplification)
+                end    
+                })
+        end
+        TimerCount = TimerCount + 1
 end
  
 function getArrowDamageIncrease( caster )
