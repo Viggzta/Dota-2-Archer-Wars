@@ -1,15 +1,8 @@
 require('archer_wars')
 require('Heroes.arrow')
 require('Heroes.locate')
-require('itemabilities')
 
 require('settings')
-
--- Barebones Libraries
-require('libraries/timers')
-require('libraries/physics')
-require('libraries/projectiles')
-require('libraries/notifications')
 
 -- Load Stat collection (statcollection should be available from any script scope)
 require('lib.statcollection')
@@ -47,6 +40,7 @@ function Precache( context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts", context )
 	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts", context )
+	PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts", context )
 end
 
 -- Create the game mode when we activate

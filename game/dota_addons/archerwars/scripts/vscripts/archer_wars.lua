@@ -1,3 +1,16 @@
+-- This library allow for easily delayed/timed actions
+require('libraries/timers')
+-- This library can be used for advancted physics/motion/collision of units.  See PhysicsReadme.txt for more information.
+require('libraries/physics')
+-- This library can be used for advanced 3D projectile systems.
+require('libraries/projectiles')
+-- This library can be used for sending panorama notifications to the UIs of players/teams/everyone
+require('libraries/notifications')
+-- This library can be used for starting customized animations on units from lua
+require('libraries/animations')
+-- This library can be used for performing "Frankenstein" attachments on units
+require('libraries/attachments')
+
 --ArcherWars
 ARCHERS = {}							-- Here we store all the heroes for each player
 KILLS = {}								-- Score tracker
@@ -90,7 +103,6 @@ function ArcherWarsGameMode:InitGameMode()
 	self.thinkState = Dynamic_Wrap(ArcherWarsGameMode, '_thinkState_PreGame')
 
 	-- Setup game Hooks
-	ListenToGameEvent('npc_spawned', Dynamic_Wrap(ArcherWarsGameMode, 'LearnLocate'), self)
 	ListenToGameEvent('npc_spawned', Dynamic_Wrap(ArcherWarsGameMode, 'TeleportSpawn'), self)
 	ListenToGameEvent( "game_rules_state_change", Dynamic_Wrap( ArcherWarsGameMode, 'OnGameRulesStateChange' ), self)
 	ListenToGameEvent('entity_killed', Dynamic_Wrap(ArcherWarsGameMode, 'UpdateScore'), self)
@@ -98,6 +110,8 @@ function ArcherWarsGameMode:InitGameMode()
 	self:RegisterCommands()
 
 	GameMode:SetThink("Think", self, 0.25)
+
+	ITEM = CreateItem( "item_apply_modifiers", source, source)
 
 	print('ArcherWars Init Gamemode finished')
 end
@@ -239,17 +253,6 @@ function ArcherWarsGameMode:GiveXp()
 	return 6.0
 end
 
--- Learns the Track ability without spending a point
-function ArcherWarsGameMode:LearnLocate( keys )
-	local hero = EntIndexToHScript(keys.entindex)
-	if hero:IsHero() then
-		local Ability = hero:FindAbilityByName("archer_locate")
-		if Ability then
-			Ability:SetLevel(1)
-		end
-	end
-end
-
 -- Send the player to a random spawn location and gives them a shield buff
 function ArcherWarsGameMode:TeleportSpawn( keys )
 	local npc = EntIndexToHScript(keys.entindex)
@@ -264,17 +267,32 @@ function ArcherWarsGameMode:TeleportSpawn( keys )
 				giveUnitDataDrivenModifier(npc, npc, "modifier_burst", 60)
 			end
 			ARCHERS[npc:GetPlayerOwnerID()] = npc
+			npc:GetAbilityByIndex(0):SetLevel(1)
+			npc:GetAbilityByIndex(1):SetLevel(1)
+			npc:GetAbilityByIndex(2):SetLevel(1)
+			npc:GetAbilityByIndex(3):SetLevel(1)
+			npc:GetAbilityByIndex(4):SetLevel(1)
+			npc:SetAbilityPoints(0)
+			if npc:GetName() == "npc_dota_hero_clinkz" then
+				npc.ExplosiveArrows = {}
+			end
 		end
 
 		FindClearSpaceForUnit(npc, point, false)
 		npc:Stop()
 		giveUnitDataDrivenModifier(npc, npc, "modifier_spawnshield", 3)
 	end
+
+	if npc:GetUnitName() == "npc_dota_unit_test" then
+		npc:GetAbilityByIndex(0):SetLevel(1)
+		npc:GetAbilityByIndex(1):SetLevel(1)
+		npc:GetAbilityByIndex(2):SetLevel(1)
+		npc:GetAbilityByIndex(3):SetLevel(1)
+	end
 end
 
 function giveUnitDataDrivenModifier(source, target, modifier, dur)
-		local item = CreateItem( "item_apply_modifiers", source, source)
-		item:ApplyDataDrivenModifier( source, target, modifier, {duration=dur} )
+		ITEM:ApplyDataDrivenModifier( source, target, modifier, {duration=dur} )
 		local buff = target:FindModifierByName( modifier )
 		--print("Current dur: " .. buff:GetDuration())
 		--print("Target dur: " .. dur)

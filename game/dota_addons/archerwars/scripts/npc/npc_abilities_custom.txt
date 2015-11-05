@@ -48,17 +48,31 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass" 					"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags" 		"DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"AbilityTextureName"			"windrunner_powershot"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
-		"LevelsBetweenUpgrades"     	"3"
+
+		"LevelsBetweenUpgrades"     	"1"
     	"RequiredLevel"         		"1"
-    	"MaxLevel"						"3"
+    	"MaxLevel"						"4"
  
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.2"
-		"AbilityCastRange"				"9999"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityCastRange"				"%range"
+
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/arrow.lua"
+				"Function"				"arrow_start_charge"
+			}
+		}
+
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -66,17 +80,13 @@
 				"ScriptFile"			"scripts/vscripts/Heroes/arrow.lua"
 				"Function"				"normalArrow"
 				"Target"				"POINT"
-				"MoveSpeed"				"%arrow_speed"
-				"FixedDistance"			"%range"
-				"StartRadius"			"%arrow_width"
-				"EndRadius"				"%arrow_width"
-				"Damage"				"%damage"
+				"particle_name"			"particles/arrow/archer_normal_arrow.vpcf"
 			}
 		}
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"2.5 2.0 1.5"
+		"AbilityCooldown"				"0"
  
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -99,12 +109,33 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"200 300 400"
+				"damage"				"100 150 225 300"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"range"					"1500 2000 2500"
+				"range"					"2000"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maximum_charges"		"2"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"charge_replenish_time"	"2.5 2.0 1.5 1.0"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_arrow_stack_counter_datadriven"
+			{
+				"Passive"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"0"
+				"IsDebuff"				"0"
 			}
 		}
 	}
@@ -127,17 +158,31 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass" 					"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags" 		"DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"AbilityTextureName"			"clinkz_searing_arrows"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
-		"LevelsBetweenUpgrades"     	"3"
+
+		"LevelsBetweenUpgrades"     	"1"
     	"RequiredLevel"         		"1"
-    	"MaxLevel"						"3"
+    	"MaxLevel"						"4"
  
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.2"
-		"AbilityCastRange"				"9999"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityCastRange"				"%range"
+
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/arrow.lua"
+				"Function"				"arrow_start_charge"
+			}
+		}
+
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -145,11 +190,7 @@
 				"ScriptFile"			"scripts/vscripts/Heroes/arrow.lua"
 				"Function"				"normalArrow"
 				"Target"				"POINT"
-				"MoveSpeed"				"%arrow_speed"
-				"FixedDistance"			"%range"
-				"StartRadius"			"%arrow_width"
-				"EndRadius"				"%arrow_width"
-				"Damage"				"%damage"
+				"particle_name"			"particles/arrow/archer_normal_arrow.vpcf"
 			}
 
 			"RunScript"
@@ -157,14 +198,12 @@
 				"ScriptFile"			"scripts/vscripts/Heroes/Demolitionist/explosiveArrow.lua"
 				"Function"				"shootExplosiveArrow"
 				"Target"				"POINT"
-				"MoveSpeed"				"%arrow_speed"
-				"FixedDistance"			"%range"
 			}
 		}
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"2.5 2.0 1.5"
+		"AbilityCooldown"				"0"
  
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -187,12 +226,33 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"200 300 400"
+				"damage"				"100 150 225 300"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"range"					"1500 2000 2500"
+				"range"					"2000"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maximum_charges"		"2"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"charge_replenish_time"	"2.5 2.0 1.5 1.0"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_arrow_stack_counter_datadriven"
+			{
+				"Passive"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"0"
+				"IsDebuff"				"0"
 			}
 		}
 	}
@@ -215,17 +275,31 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass" 					"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags" 		"DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"AbilityTextureName"			"mirana_arrow"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
-		"LevelsBetweenUpgrades"     	"3"
+
+		"LevelsBetweenUpgrades"     	"1"
     	"RequiredLevel"         		"1"
-    	"MaxLevel"						"3"
+    	"MaxLevel"						"4"
  
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.2"
-		"AbilityCastRange"				"9999"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityCastRange"				"%range"
+
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/arrow.lua"
+				"Function"				"arrow_start_charge"
+			}
+		}
+
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -233,17 +307,13 @@
 				"ScriptFile"			"scripts/vscripts/Heroes/arrow.lua"
 				"Function"				"normalArrow"
 				"Target"				"POINT"
-				"MoveSpeed"				"%arrow_speed"
-				"FixedDistance"			"%range"
-				"StartRadius"			"%arrow_width"
-				"EndRadius"				"%arrow_width"
-				"Damage"				"%damage"
+				"particle_name"			"particles/arrow/archer_normal_arrow.vpcf"
 			}
 		}
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"2.5 2.0 1.5"
+		"AbilityCooldown"				"0"
  
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -261,17 +331,38 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"arrow_speed"			"100.0"
+				"arrow_speed"			"500.0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"200 300 400"
+				"damage"				"100 150 225 300"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"range"					"9999"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maximum_charges"		"2"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"charge_replenish_time"	"2.5 2.0 1.5 1.0"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_arrow_stack_counter_datadriven"
+			{
+				"Passive"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"0"
+				"IsDebuff"				"0"
 			}
 		}
 	}
@@ -293,35 +384,46 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass" 					"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags" 		"DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"AbilityTextureName"			"medusa_split_shot"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
-		"LevelsBetweenUpgrades"     	"2"
-    	"RequiredLevel"         		"3"
-    	"MaxLevel"						"3"
+
+		"LevelsBetweenUpgrades"     	"1"
+    	"RequiredLevel"         		"1"
+    	"MaxLevel"						"4"
  
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.2"
 		"AbilityCastRange"				"9999"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"scripts/vscripts/Heroes/Assault/splitArrow.lua"
-				"Function"				"splitArrow"
+				"ScriptFile"			"scripts/vscripts/Heroes/Assault/spread_shot.lua"
+				"Function"				"Activate"
 				"Target"				"POINT"
-				"MoveSpeed"				"%arrow_speed"
-				"FixedDistance"			"%range"
-				"StartRadius"			"%arrow_width"
-				"EndRadius"				"%arrow_width"
-				"Damage"				"%damage"
+				"particle_name"			"particles/arrow/archer_normal_arrow.vpcf"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+
+			"RunScript"
+			{
+				"ScriptFile"			"scripts/vscripts/Heroes/Assault/spread_shot.lua"
+				"Function"				"Hit"
 			}
 		}
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"15.0 12.5 10.0"
+		"AbilityCooldown"				"25.0 22.5 20.0 17.5 15.0 12.5 10.0"
  
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -344,12 +446,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"150 225 300"
+				"damage"				"100 150 200 250"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"range"					"1500 2000 2500"
+				"range"					"2000"
 			}
 		}
 	}
@@ -373,8 +475,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT"
 		"AbilityTextureName"			"riki_smoke_screen"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
-		"LevelsBetweenUpgrades"     	"2"
-    	"RequiredLevel"         		"3"
+
     	"MaxLevel"						"1"
  
 		// Casting
@@ -434,9 +535,10 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass" 					"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE = 1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE = 1"
 		"AbilityTextureName"			"kunkka_x_marks_the_spot"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+
 		"MaxLevel"						"1"
  
 		// Casting
@@ -500,8 +602,13 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass" 					"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags" 		"DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"AbilityTextureName"			"invoker_chaos_meteor"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
+
 		"LevelsBetweenUpgrades"     	"6"
     	"RequiredLevel"         		"6"
     	"MaxLevel"						"2"
@@ -510,7 +617,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.2"
 		"AbilityCastRange"				"9999"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"OnSpellStart"
 		{
 			"LinearProjectile"
@@ -523,7 +629,7 @@
 				"StartRadius"			"%arrow_width"
 				"EndRadius"				"%arrow_width"
 				"TargetTeams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"TargetTypes"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_COURIER"
+				"TargetTypes"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 				"TargetFlags"			"DOTA_UNIT_TARGET_FLAG_NO_INVIS"
 				"HasFrontalCone"		"0"
 				"ProvidesVision"		"1"
@@ -615,11 +721,16 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass" 					"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags" 		"DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"AbilityTextureName"			"techies_focused_detonate"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
-		"LevelsBetweenUpgrades"     	"2"
-    	"RequiredLevel"         		"3"
-    	"MaxLevel"						"3"
+
+		"LevelsBetweenUpgrades"     	"1"
+    	"RequiredLevel"         		"1"
+    	"MaxLevel"						"4"
  
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -630,8 +741,8 @@
 			{
 				"ScriptFile"			"scripts/vscripts/Heroes/Demolitionist/explosiveArrow.lua"
 				"Function"				"explodeArrow"
-				"explosion_particle"	"particles/units/heroes/hero_meepo/meepo_poof_end.vpcf"
-				"explosion_sound"		"Hero_Rattletrap.Rocket_Flare.Explode"
+				"particle_name"			"particles/units/heroes/hero_meepo/meepo_poof_end.vpcf"
+				"sound_name"			"Hero_Rattletrap.Rocket_Flare.Explode"
 			}
 		}
 		
@@ -650,7 +761,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 150 200"
+				"damage"				"75 100 150 225"
 			}
 			"02"
 			{
@@ -679,9 +790,10 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT"
 		"AbilityTextureName"			"beastmaster_call_of_the_wild_hawk"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
-		"LevelsBetweenUpgrades"			"2"
-		"RequiredLevel"					"3"
-		"MaxLevel"						"3"
+
+		"LevelsBetweenUpgrades"			"1"
+		"RequiredLevel"					"1"
+		"MaxLevel"						"4"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -690,7 +802,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"scripts/vscripts/Heroes/Sniper/hawk.lua"
+				"ScriptFile"			"scripts/vscripts/Heroes/hero_sniper/hawk.lua"
 				"Function"				"summonHawk"
 			}
 
@@ -705,14 +817,14 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"scripts/vscripts/Heroes/Sniper/hawk.lua"
+				"ScriptFile"			"scripts/vscripts/Heroes/hero_sniper/hawk.lua"
 				"Function"				"upgradeHawk"
 			}
 		}
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60"
+		"AbilityCooldown"				"45"
  
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -725,12 +837,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"300 450 600"
+				"health"				"400 600 800 1000"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"270 300 330"
+				"speed"					"350"
 			}
 			"03"
 			{
@@ -752,7 +864,7 @@
 				{
 					"RunScript"
 				    {
-						"ScriptFile"			"scripts/vscripts/Heroes/Sniper/hawk.lua"
+						"ScriptFile"			"scripts/vscripts/Heroes/hero_sniper/hawk.lua"
 						"Function"				"deathHawk"
 				    }
 				}
@@ -760,11 +872,10 @@
 		}
 	}
 
-	//==================================================Arrow Copies===================================================
 	//=================================================================================================================
-	// Archer: Arrow2
+	// Archer: Rapid Fire
 	//=================================================================================================================
-	"archer_normal_arrow2"
+	"archer_rapid_fire"
 	{
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -777,36 +888,49 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass" 					"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityTextureName"			"windrunner_powershot"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags" 		"DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"			"windrunner_focusfire"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
-		"LevelsBetweenUpgrades"     	"3"
-    	"RequiredLevel"         		"2"
-    	"MaxLevel"						"3"
+
+		"LevelsBetweenUpgrades"     	"1"
+    	"RequiredLevel"         		"1"
+    	"MaxLevel"						"4"
  
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.2"
 		"AbilityCastRange"				"9999"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"scripts/vscripts/Heroes/arrow.lua"
-				"Function"				"normalArrow"
+				"ScriptFile"			"scripts/vscripts/Heroes/Assault/rapidFire.lua"
+				"Function"				"Activate"
 				"Target"				"POINT"
-				"MoveSpeed"				"%arrow_speed"
-				"FixedDistance"			"%range"
-				"StartRadius"			"%arrow_width"
-				"EndRadius"				"%arrow_width"
-				"Damage"				"%damage"
+				"particle_name"			"particles/arrow/archer_normal_arrow.vpcf"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+
+			"RunScript"
+			{
+				"ScriptFile"			"scripts/vscripts/Heroes/Assault/rapidFire.lua"
+				"Function"				"Hit"
 			}
 		}
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"2.5 2.0 1.5"
+		"AbilityCooldown"				"25.0 22.5 20.0 17.5 15.0 12.5 10.0"
+		"AbilityChannelTime"			"3.0"
  
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -829,71 +953,69 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"200 300 400"
+				"damage"				"75"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"range"					"1500 2000 2500"
+				"range"					"2000"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"instances"				"10 15 20 25"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Archer: Explosive Arrow2
+	// Archer: Arrow Rain
 	//=================================================================================================================
-	"archer_explosive_arrow2"
+	"archer_arrow_rain"
 	{
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle_folder"			"particles/arrow"
-            "soundfile"					"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
+			"particle"					"particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_calldown_first.vpcf"
+            "soundfile"					"soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
 		}
 
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass" 					"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityTextureName"			"clinkz_searing_arrows"
-		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
-		"LevelsBetweenUpgrades"     	"3"
-		"RequiredLevel"         		"2"
-		"MaxLevel"						"3"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags" 		"DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"			"legion_commander_overwhelming_odds"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+
+		"LevelsBetweenUpgrades"     	"1"
+    	"RequiredLevel"         		"1"
+    	"MaxLevel"						"4"
  
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.2"
-		"AbilityCastRange"				"9999"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityCastPoint"				"0.5"
+		"AbilityCastRange"				"1800"
+		"AoERadius"						"%radius"
+		
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"scripts/vscripts/Heroes/arrow.lua"
-				"Function"				"normalArrow"
-				"Target"				"POINT"
-				"MoveSpeed"				"%arrow_speed"
-				"FixedDistance"			"%range"
-				"StartRadius"			"%arrow_width"
-				"EndRadius"				"%arrow_width"
-				"Damage"				"%damage"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"scripts/vscripts/Heroes/Demolitionist/explosiveArrow.lua"
-				"Function"				"shootExplosiveArrow"
-				"Target"				"POINT"
-				"MoveSpeed"				"%arrow_speed"
-				"FixedDistance"			"%range"
+				"ScriptFile"	"heroes/Demolitionist/arrowRain.lua"
+				"Function"		"Activate"
+				"Target"		"POINT"
+				"particle_name"	"particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_calldown_first.vpcf"
 			}
 		}
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"2.5 2.0 1.5"
+		"AbilityCooldown"				"25.0 17.5 15.0 10.0"
  
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -906,73 +1028,80 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"arrow_width"			"100"
+				"radius"				"450"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"arrow_speed"			"1000.0"
+				"delay"					"2.0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"200 300 400"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"range"					"1500 2000 2500"
+				"damage"				"150 250 350 450"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Archer: Sniper Arrow2
+	// Archer: Aimed Shot
 	//=================================================================================================================
-	"archer_sniper_arrow2"
+	"archer_aimed_shot"
 	{
-
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle_folder"			"particles/arrow"
+			"particle"					"particles/econ/items/windrunner/windrunner_weapon_sparrowhawk/windrunner_spell_powershot_sparrowhawk.vpcf"
             "soundfile"					"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
 		}
 
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass" 					"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityTextureName"			"mirana_arrow"
-		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
-		"LevelsBetweenUpgrades"			"3"
-		"RequiredLevel"					"2"
-		"MaxLevel"						"3"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags" 		"DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"			"enchantress_impetus"
+		"AbilityCastAnimation" 			""
+
+		"LevelsBetweenUpgrades"     	"1"
+    	"RequiredLevel"         		"1"
+    	"MaxLevel"						"4"
  
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.2"
+		"AbilityChannelTime"			"1.5"
 		"AbilityCastRange"				"9999"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"OnSpellStart"
+
+		"OnChannelSucceeded"
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"scripts/vscripts/Heroes/arrow.lua"
-				"Function"				"normalArrow"
+				"ScriptFile"			"scripts/vscripts/Heroes/hero_sniper/aimedShot.lua"
+				"Function"				"Activate"
 				"Target"				"POINT"
-				"MoveSpeed"				"%arrow_speed"
-				"FixedDistance"			"%range"
-				"StartRadius"			"%arrow_width"
-				"EndRadius"				"%arrow_width"
-				"Damage"				"%damage"
+				"particle_name"			"particles/econ/items/windrunner/windrunner_weapon_sparrowhawk/windrunner_spell_powershot_sparrowhawk.vpcf"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+
+			"RunScript"
+			{
+				"ScriptFile"			"scripts/vscripts/Heroes/hero_sniper/aimedShot.lua"
+				"Function"				"Hit"
 			}
 		}
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"2.5 2.0 1.5"
+		"AbilityCooldown"				"5.0"
  
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -985,22 +1114,209 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"arrow_width"			"100"
+				"arrow_width"			"125"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"arrow_speed"			"100.0"
+				"arrow_speed"			"7000.0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"200 300 400"
+				"damage"				"200 300 400 500"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"range"					"9999"
+				"range"					"99999"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Test Unit: Refresh
+	//=================================================================================================================
+	"test_refresh"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass" 					"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"tinker_rearm"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+
+    	"MaxLevel"						"1"
+ 
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"scripts/vscripts/Units/test_unit/refresh.lua"
+				"Function"				"Activate"
+			}
+		}
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+ 
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+	}
+
+	//=================================================================================================================
+	// Test Unit: Invisible
+	//=================================================================================================================
+	"test_invis"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass" 					"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"AbilityTextureName"			"riki_permanent_invisibility"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+
+    	"MaxLevel"						"1"
+ 
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+
+		"OnToggleOn"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_invisible"
+				"Target" 		"CASTER"
+			}
+		}
+
+		"OnToggleOff"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_invisible"
+				"Target" 		"CASTER"
+			}
+		}
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+ 
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+	}
+
+	//=================================================================================================================
+	// Test Unit: Armor
+	//=================================================================================================================
+	"test_armor"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass" 					"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"dragon_knight_dragon_tail"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+
+    	"MaxLevel"						"1"
+ 
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_test_armor"
+				"Target" 		"CASTER"
+			}
+		}
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+ 
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		"Modifiers"
+		{
+			"modifier_test_armor"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+				"IsBuff"				"1"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"1"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Test Unit: Armor Reset
+	//=================================================================================================================
+	"test_armor_reset"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass" 					"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"slardar_amplify_damage"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+
+    	"MaxLevel"						"1"
+ 
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_test_armor_debuff"
+				"Target" 		"CASTER"
+			}
+		}
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+ 
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		"Modifiers"
+		{
+			"modifier_test_armor_debuff"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+				"IsDebuff"				"1"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"-1"
+				}
 			}
 		}
 	}

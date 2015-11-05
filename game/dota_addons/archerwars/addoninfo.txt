@@ -1,13 +1,17 @@
 "AddonInfo"
 {
 	"TeamCount"	"10"
-	maps			"classic_woods small_oasis"
+	maps			"small_oasis small_forest_oasis classic_woods"
 	"IsPlayable"	"1"
 	"classic_woods"
 	{
 		"MaxPlayers"                    "10"
 	}
 	"small_oasis"
+	{
+		"MaxPlayers"                    "5"
+	}
+	"small_forest_oasis"
 	{
 		"MaxPlayers"                    "5"
 	}

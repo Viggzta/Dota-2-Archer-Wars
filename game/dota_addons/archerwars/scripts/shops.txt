@@ -3,38 +3,46 @@
 	"consumables"
 	{
 		"item"			"item_ward"
+		"item"			"item_small_bandage"
+		"item"			"item_medium_bandage"
+		"item"			"item_large_bandage"
+		"item"			"item_eagle_eye"
 	}
 
 	"attributes"
 	{
-		"item"			"item_sac_gem"
-		"item"			"item_swap_gem"
-		"item"			"item_burst_gem"
-		"item"			"item_pull_gem"
-		"item"			"item_vision_gem"
+		"item"			"item_gem_burst"
+		"item"			"item_gem_earth"
+		"item"			"item_gem_fire"
+		"item"			"item_gem_gravity"
+		"item"			"item_gem_light"
+		"item"			"item_gem_ice"
+		"item"			"item_gem_sacrifice"
+		"item"			"item_gem_wind"
 	}
 
 	"weapons_armor"
 	{
-		"item"			"item_reinforced_arrows"
-		"item"			"item_lifesteal_mask"
-		"item"			"item_mm_luck"
-		"item"			"item_dual_arrows"
-		"item"			"item_mana_steal"
-		"item"			"item_astral_compass"
+		"item"			"item_reinforced_bow"
+		"item"			"item_magic_string"
 	}
 			
 	"misc"
 	{
 		"item"			"item_elven_boots"
-		"item"			"item_eagle_eye"
+		"item"			"item_lifesteal_mask"
+		"item"			"item_astral_compass"
+		"item"			"item_blood_ring"
+		"item"			"item_ring_of_resistance"
 	}	
 	
 	// Level 1 - Green Recipes
 	"basics"
 	{			
+		"item"			"item_blink_boots"
+		"item"			"item_burst_boots"
+		"item"			"item_rocket_boots"
 		"item"			"item_wov"
-		"item"			"item_enchanted_boots"
 	}
 
 	// Level 2 - Blue Recipes
@@ -58,9 +66,8 @@
 	// Level 4 - Orange / Orb / Artifacts				
 	"artifacts"
 	{
-		"item"			"item_fire_arrows"
-		"item"			"item_frost_arrows"
-		"item"			"item_lightning_arrows"
+		"item"			"item_gravity_bow"
+		"item"			"item_ichor_bow"
 	}
 
 	"sideshop1"

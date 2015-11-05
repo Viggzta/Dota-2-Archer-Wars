@@ -1,3 +1,5 @@
+PHYSICS_VERSION = "0.91"
+
 PHYSICS_NAV_NOTHING = 0
 PHYSICS_NAV_HALT = 1
 PHYSICS_NAV_SLIDE = 2
@@ -876,7 +878,7 @@ function Physics:Unit(unit)
   Physics:CreateTimer(unit.PhysicsTimerName, {
     endTime = GameRules:GetGameTime(),
     useGameTime = true,
-    callback = function(reflex, args)
+    callback = function(dota2rpg, args)
       local prevTime = unit.PhysicsLastTime
       if not IsValidEntity(unit) then
         return
@@ -1673,7 +1675,7 @@ function Physics:PhysicsTestCommand(...)
         useOldStyle = true,
         useGameTime = true,
         endTime = GameRules:GetGameTime(),
-        callback = function(reflex, args)
+        callback = function(dota2rpg, args)
           local pushNum = math.floor(#units / 10) + 1
           for i=1,pushNum do
             local unit = units[RandomInt(1, #units)]
@@ -1973,7 +1975,7 @@ function Physics:PrecalculateAABox(box)
 end
 
 
-Physics:start()
+if not Physics.timers then Physics:start() end
 
 Physics:CreateColliderProfile("blocker", 
   {
